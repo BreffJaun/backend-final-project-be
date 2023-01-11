@@ -12,32 +12,9 @@ const userSchema = new Schema({
   isAdmin: {type: Boolean, default: false},
   isVerified: {type: Boolean, default: false},
   isVerifiedTCP: {type: Boolean, default: false}  // TCP = To Change Password;
-  // ,
-  // user: {type: Schema.Types.ObjectId, ref: "User", required: true}
-  // ,
-  // paid: {type: Boolean, default: false}
-  // ,
-  // price: {type: Number, required: true}
-  // ,
-  // lastName: {type: [String], required: true}
-  // ,
 }
-// ,
-// {
-//   toObject: {
-//   virtuals: true
-//   },
-//   toJSON: {
-//   virtuals: true
-//   } 
-// }
 , 
 {strictQuery: true});
-
-// Virtual
-// userSchema.virtual("fullName").get(function() {
-//   return `${this.firstName} ${this.lastName}`
-// })
 
 // M O D E L - T E M P L A T E   F O R   D B   E N T R I E S
 const UserModel = model('User', userSchema, 'users');

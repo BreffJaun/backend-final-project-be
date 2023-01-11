@@ -62,6 +62,4 @@ router
   .route('/setnewpassword/:token')
     .post(setNewPassword)
 
-
-
   export default router;

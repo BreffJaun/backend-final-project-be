@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 // I M P O R T:  M O D E L
 import UserModel from "../models/userModel.js";
+import CoffeeshopModel from "../models/coffeeshopsModel.js";
 
 // C O N N E C T   W I T H   M O N G O O S E  D B
 const MONGO_DB_CONNECTION_STRING = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority` || "mongodb://localhost:27017"
@@ -21,9 +22,10 @@ cleanDB();
 
 async function cleanDB() {
   try {
-    const userPromise = UserModel.deleteMany({}) // remove all entries
+    const userPromise = UserModel.deleteMany({})
+    const shopPromises = CoffeeshopModel.deleteMany({});
     const values = await Promise.all([
-      userPromise
+      userPromise, shopPromises
     ])
     console.log("DB cleaned.", values)
     mongoose.disconnect();
@@ -34,15 +36,3 @@ async function cleanDB() {
 
 // npm run clean
 // to empty the db
-
-
-
-// Old Spelling
-// async function cleanDB() {
-//   try {
-//     await UserModel.deleteMany({})
-//     console.log("DB cleaned")
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }

@@ -5,6 +5,7 @@ import {faker} from "@faker-js/faker";
 
 // I M P O R T:  M O D E L
 import UserModel from "../models/userModel.js";
+import CoffeeshopModel from "../models/coffeeshopsModel.js";
 
 // C O N N E C T   W I T H   M O N G O O S E  D B
 const MONGO_DB_CONNECTION_STRING = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority` || "mongodb://localhost:27017"
@@ -22,18 +23,44 @@ seed()
 
 async function seed() {
   try {
-    const fakeUserData= []
-    for(let i = 0; i < 50; i++) {
-      fakeUserData.push({
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        email: faker.internet.exampleEmail(),
-        password: faker.internet.password()
+    // CREATE FAKE USER DATA START //
+    // const fakeUserData= []
+    // for(let i = 0; i < 50; i++) {
+    //   fakeUserData.push({
+    //     firstName: faker.name.firstName(),
+    //     lastName: faker.name.lastName(),
+    //     email: faker.internet.exampleEmail(),
+    //     password: faker.internet.password()
+    //   })
+    // }
+    // const userPromise = UserModel.insertMany(fakeUserData);
+    // const values = await Promise.all([
+    //   userPromise
+    // ])
+    // CREATE FAKE USER DATA END //
+          
+    // CREATE FAKE SHOP DATA START //
+    const fakeShopData= []
+    for(let i = 0; i < 250; i++) {
+      fakeShopData.push({
+        name: faker.company.name(),
+        longitude: faker.address.longitude(54.7819, 47.4921, 4), //max, min, precision
+        latitude: faker.address.latitude(14.9872, 6.0838, 4),
+        img_url: faker.image.business(640, 640, false), // width, height, randomize
+        has_sockets: faker.datatype.boolean(),
+        has_sockets: faker.datatype.boolean(),
+        has_wifi: faker.datatype.boolean(),
+        has_toilet: faker.datatype.boolean(),
+        can_take_calls: faker.datatype.boolean(),
+        seats: faker.finance.amount(0, 30, 0), // min, max, decimal-num
+        espresso_price: faker.finance.amount(1, 3, 2, "€", true), // min, max, decimal-num, toLocaleString 
+        rating: faker.finance.amount(1, 5, false), // min, max
+        comments: faker.lorem.text()
       })
     }
-    const userPromise = UserModel.insertMany(fakeUserData);
+    const shopPromise = CoffeeshopModel.insertMany(fakeShopData);
     const values = await Promise.all([
-      userPromise
+      shopPromise
     ])
     console.log("Seeding complete", values);
   } catch (err) {
@@ -45,3 +72,8 @@ async function seed() {
 
 // npm run seed
 // to seed the db (fill it with fake data)
+
+// min longitude 47.4921 / max longitude 54.7819
+// min latitude 14.9872 / max latitude 6.0838
+// Espresso 2.90 (Solingen)
+// 

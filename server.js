@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 
 // I M P O R T:  R O U T E S
 import usersRouter from './routes/users.js';
+import coffeeRouter from './routes/coffeeshops.js';
 import wrongRoutes from './routes/wrongPath.js';
 
 // I M P O R T:  E R R O R  H A N D L E R
@@ -36,10 +37,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser())
 app.use(cors(
-  // {
-  //   origin: 'http://localhost:3000', // hier Render Adresse eintragen
-  //   credentials: true
-  // }
+    {
+      origin: 'http://localhost:3000', // hier Render Adresse eintragen
+      credentials: true
+    }
   )
 );
 app.use(morgan("dev"));
@@ -47,6 +48,9 @@ app.use(morgan("dev"));
 // ROUTER MIDDLEWARE
 // USERS
 app.use('/users', usersRouter);
+
+// COFFEE SHOPS
+app.use('/coffeeshops', coffeeRouter);
 
 
 // ERROR HANDLER
