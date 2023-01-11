@@ -2,7 +2,7 @@
 import { Schema, model } from "mongoose";
 
 // S C H E M A  -  D A T A   S T R U C T U R E
-const coffeeshopSchema = new Schema({
+const coffeeShopSchema = new Schema({
   name: { type: String, required: true },
   longitude: String,
   latitude: String,
@@ -26,5 +26,5 @@ const coffeeshopSchema = new Schema({
 );
 
 // M O D E L - T E M P L A T E   F O R   D B   E N T R I E S
-const CoffeeshopModel = model("coffeeshop", coffeeshopSchema, "coffeeshops");
-export default CoffeeshopModel;
+const CoffeeShopModel = model("coffeeshop", coffeeShopSchema, "coffeeshops");
+export default CoffeeShopModel;

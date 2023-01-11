@@ -5,7 +5,7 @@ import {faker} from "@faker-js/faker";
 
 // I M P O R T:  M O D E L
 import UserModel from "../models/userModel.js";
-import CoffeeshopModel from "../models/coffeeshopsModel.js";
+import CoffeeShopModel from "../models/coffeeshopsModel.js";
 
 // C O N N E C T   W I T H   M O N G O O S E  D B
 const MONGO_DB_CONNECTION_STRING = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority` || "mongodb://localhost:27017"
@@ -58,7 +58,7 @@ async function seed() {
         comments: faker.lorem.text()
       })
     }
-    const shopPromise = CoffeeshopModel.insertMany(fakeShopData);
+    const shopPromise = CoffeeShopModel.insertMany(fakeShopData);
     const values = await Promise.all([
       shopPromise
     ])
