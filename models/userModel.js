@@ -4,13 +4,14 @@ import {Schema, model} from "mongoose";
 // S C H E M A  -  D A T A   S T R U C T U R E
 const userSchema = new Schema({
   userName: {type: String, required: true},
+  city: {type: String, required: true},
   email: {type: String, required: false, unique: true},
   // with unique we check and go sure, that this email doesn`t already exists in the database
   password: {type: String, required: true},
   avatar: {type: String},
   isAdmin: {type: Boolean, default: false},
   isVerified: {type: Boolean, default: false},
-  isVerifiedTCP: {type: Boolean, default: false}  // TCP = To Change Password;
+  isVerifiedTCP: {type: Boolean, default: false},  // TCP = To Change Password;
 }
 , 
 {strictQuery: true});

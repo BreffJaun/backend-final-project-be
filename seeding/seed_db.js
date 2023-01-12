@@ -24,19 +24,17 @@ seed()
 async function seed() {
   try {
     // CREATE FAKE USER DATA START //
-    // const fakeUserData= []
-    // for(let i = 0; i < 50; i++) {
-    //   fakeUserData.push({
-    //     firstName: faker.name.firstName(),
-    //     lastName: faker.name.lastName(),
-    //     email: faker.internet.exampleEmail(),
-    //     password: faker.internet.password()
-    //   })
-    // }
-    // const userPromise = UserModel.insertMany(fakeUserData);
-    // const values = await Promise.all([
-    //   userPromise
-    // ])
+    const fakeUserData= []
+    for(let i = 0; i < 50; i++) {
+      fakeUserData.push({
+        userName: faker.name.firstName(),
+        city: faker.address.cityName(),
+        email: faker.internet.exampleEmail(),
+        password: faker.internet.password(),
+        avatar: bla
+      })
+    }
+    const userPromise = UserModel.insertMany(fakeUserData);
     // CREATE FAKE USER DATA END //
           
     // CREATE FAKE SHOP DATA START //
@@ -68,6 +66,7 @@ async function seed() {
     }
     const shopPromise = CoffeeShopModel.insertMany(fakeShopData);
     const values = await Promise.all([
+      userPromise,
       shopPromise
     ])
     console.log("Seeding complete", values);
