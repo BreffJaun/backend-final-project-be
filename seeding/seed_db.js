@@ -44,18 +44,26 @@ async function seed() {
     for(let i = 0; i < 250; i++) {
       fakeShopData.push({
         name: faker.company.name(),
-        longitude: faker.address.longitude(54.7819, 47.4921, 4), //max, min, precision
-        latitude: faker.address.latitude(14.9872, 6.0838, 4),
         img_url: faker.image.business(640, 640, false), // width, height, randomize
-        has_sockets: faker.datatype.boolean(),
-        has_sockets: faker.datatype.boolean(),
-        has_wifi: faker.datatype.boolean(),
-        has_toilet: faker.datatype.boolean(),
-        can_take_calls: faker.datatype.boolean(),
+        location: {
+          address: {
+            street: faker.address.streetName(),
+            number: faker.random.numeric(),
+            zip: faker.address.zipCode(),
+            city: faker.address.cityName(),
+          },
+          longitude: faker.address.longitude(54.7819, 47.4921, 4), //max, min, precision
+          latitude: faker.address.latitude(14.9872, 6.0838, 4)
+        },
+        services: {
+          has_sockets: faker.datatype.boolean(),
+          has_wifi: faker.datatype.boolean(),
+          has_toilet: faker.datatype.boolean(),
+          can_take_calls: faker.datatype.boolean()
+        },
         seats: faker.finance.amount(0, 30, 0), // min, max, decimal-num
         espresso_price: faker.finance.amount(1, 3, 2, "€", true), // min, max, decimal-num, toLocaleString 
-        rating: faker.finance.amount(1, 5, false), // min, max
-        comments: faker.lorem.text()
+        
       })
     }
     const shopPromise = CoffeeShopModel.insertMany(fakeShopData);
