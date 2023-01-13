@@ -16,6 +16,6 @@ const router = express.Router();
 
 router.route("/").get(getComments).post(addComment);
 
-router.route("/:id").patch(auth, updateComment).delete(auth, deleteComment);
+router.route("/:id").delete(auth, deleteComment).patch(auth, updateComment);
 
 export default router;
