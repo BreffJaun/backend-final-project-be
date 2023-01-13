@@ -14,8 +14,9 @@ import { auth } from "../middleware/auth.js";
 // C R E A T E   R O U T E S
 const router = express.Router();
 
-router.route("/").get(getRatings).post(addRating);
+router.route("/").get(getRatings).post(auth, addRating);
 
-router.route("/:id").patch(auth, updateRating).delete(auth, deleteRating);
+router.route("/:id").delete(auth, deleteRating).patch(auth, updateRating); 
+// RATING ID
 
 export default router;
