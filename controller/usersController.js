@@ -48,7 +48,7 @@ export async function usersPostUser (req, res, next) {
       )
     const msg = {
       to: newUser.email, // Change to your recipient
-      from: `${"fillIn@your.mail"}`, // Change to your verified sender
+      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: 'EMAIL VERIFICATION for the Record-Shop',
       text: `To verify your email, please click on this link: ${HOST}/users/verify/${verifyToken}`,
       html: `<p><a href="${HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
@@ -97,7 +97,7 @@ export async function forgotPassword (req, res, next) {
       )
     const msg = {
       to: userFromDb.email, // Change to your recipient
-      from: `${"fillIn@your.mail"}`, // Change to your verified sender
+      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: 'SET A NEW PASSWORD for ......',
       text: `To change your password, please click on this link: ${HOST}/users/setnewpassword/${verifyToken}`,
       html: `<p><a href="${HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
