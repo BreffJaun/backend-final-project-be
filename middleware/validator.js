@@ -7,5 +7,5 @@ export const validateRequest = (req, res, next) => {
 	if (validationErrors.isEmpty()) {
 		return next();
 	} 
-	res.status(422).send({ errors: validationErrors.array() });
+	res.status(422).send({ error: validationErrors.array() });
 };
