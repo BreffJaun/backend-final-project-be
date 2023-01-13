@@ -6,6 +6,8 @@ import sgMail from '@sendgrid/mail';
 
 // I M P O R T:  F U N C T I O N S
 import UserModel from '../models/userModel.js';
+import { JSONCookie } from "cookie-parser";
+import { json } from "express";
 
 // I M P O R T  &  D E C L A R E   B C R Y P T   K E Y 
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue"
@@ -298,7 +300,7 @@ export async function usersChecklogin(req, res, next) {
     const token = req.cookies.loginCookie
     const tokenDecoded = jwt.verify(token, JWT_KEY)
     console.log('Token in Cookie is valid. User is loggedin');
-    res.status(200).end();
+    res.status(200).json({message: 'SUCCESFULLY LOGGED IN'}).end();
   } catch (err) {
     next(err);
     // res.status(401).end()
