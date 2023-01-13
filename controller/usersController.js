@@ -37,7 +37,7 @@ export async function usersPostUser (req, res, next) {
     if (req.file) {
       await UserModel.findByIdAndUpdate(createdUser._id, {avatar: `${HOST}/${req.file.path}`});
     } else {
-      await UserModel.findByIdAndUpdate(createdUser._id, {avatar: `${HOST}/assets/images/coffee-bean.jpeg`});
+      await UserModel.findByIdAndUpdate(createdUser._id, {avatar: `${HOST}/assets/images/coffypaste_icon_avatar.png`});
     }
     // AVATAR IMPLEMENT END //
 
