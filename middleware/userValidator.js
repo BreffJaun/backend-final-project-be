@@ -3,23 +3,18 @@ import {body} from 'express-validator';
 
 // C R E A T E   V A L I D A T O R
 export const userValidator = [
-  body("firstName")
+  body("userName")
     .notEmpty()
-    .withMessage("Firstname has to bet set!")
+    .withMessage("Username has to bet set!")
     .isAlpha("de-DE", {ignore: " -"})
-    .withMessage("Firstname contains not allowed signs!")
+    .withMessage("Username contains not allowed signs!")
     .trim() // takes out whitespaces at the beginning and the end of an string
     .escape(), // changes special chars into normal chars
-  body("lastName")
-    .trim()
-    .isLength({max:20})
-    .escape(),
   body("email")
     .notEmpty()
     .withMessage("Email has to be set!")
     .trim()
-    .isEmail()
-    .normalizeEmail(),
+    .isEmail(),
   body("password")
     .notEmpty()
     .withMessage("Password has to bet set!")
@@ -30,10 +25,10 @@ export const userValidator = [
 ]
 
 export const userUpdateValidator = [
-  body("firstName")
+  body("UserName")
     .optional()
     .isAlpha("de-DE", {ignore: " -"})
-    .withMessage("Firstname contains not allowed signs!")
+    .withMessage("Username contains not allowed signs!")
     .trim(),
 ]
 

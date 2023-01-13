@@ -6,6 +6,8 @@ import sgMail from '@sendgrid/mail';
 
 // I M P O R T:  F U N C T I O N S
 import UserModel from '../models/userModel.js';
+import { JSONCookie } from "cookie-parser";
+import { json } from "express";
 
 // I M P O R T  &  D E C L A R E   B C R Y P T   K E Y 
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue"
@@ -48,7 +50,7 @@ export async function usersPostUser (req, res, next) {
       )
     const msg = {
       to: newUser.email, // Change to your recipient
-      from: `${"fillIn@your.mail"}`, // Change to your verified sender
+      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: 'EMAIL VERIFICATION for the Record-Shop',
       text: `To verify your email, please click on this link: ${HOST}/users/verify/${verifyToken}`,
       html: `<p><a href="${HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
@@ -97,7 +99,7 @@ export async function forgotPassword (req, res, next) {
       )
     const msg = {
       to: userFromDb.email, // Change to your recipient
-      from: `${"fillIn@your.mail"}`, // Change to your verified sender
+      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: 'SET A NEW PASSWORD for ......',
       text: `To change your password, please click on this link: ${HOST}/users/setnewpassword/${verifyToken}`,
       html: `<p><a href="${HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
@@ -298,7 +300,7 @@ export async function usersChecklogin(req, res, next) {
     const token = req.cookies.loginCookie
     const tokenDecoded = jwt.verify(token, JWT_KEY)
     console.log('Token in Cookie is valid. User is loggedin');
-    res.status(200).end();
+    res.status(200).json({message: 'SUCCESFULLY LOGGED IN'}).end();
   } catch (err) {
     next(err);
     // res.status(401).end()

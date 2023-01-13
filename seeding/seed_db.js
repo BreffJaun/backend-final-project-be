@@ -18,6 +18,9 @@ mongoose.connect(MONGO_DB_CONNECTION_STRING,
 // for errors which comes after the successfully connection
 mongoose.connection.on('error', console.log);
 
+// I M P O R T  &  D E C L A R E   E N V   K E Y S
+const HOST = process.env.HOST;
+
 // S E E D I N G   P R O C E S S
 seed()
 
@@ -31,7 +34,7 @@ async function seed() {
         city: faker.address.cityName(),
         email: faker.internet.exampleEmail(),
         password: faker.internet.password(),
-        avatar: bla
+        avatar: `${HOST}/assets/images/coffee-bean.jpeg`
       })
     }
     const userPromise = UserModel.insertMany(fakeUserData);
@@ -60,8 +63,7 @@ async function seed() {
           can_take_calls: faker.datatype.boolean()
         },
         seats: faker.finance.amount(0, 30, 0), // min, max, decimal-num
-        espresso_price: faker.finance.amount(1, 3, 2, "€", true), // min, max, decimal-num, toLocaleString 
-        
+        espresso_price: faker.finance.amount(1, 3, 2, "€", true), // min, max, decimal-num, toLocaleString         
       })
     }
     const shopPromise = CoffeeShopModel.insertMany(fakeShopData);
