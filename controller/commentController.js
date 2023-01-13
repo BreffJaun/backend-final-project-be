@@ -1,9 +1,13 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
 import * as dotenv from "dotenv";
 dotenv.config();
+import jwt from "jsonwebtoken";
 
 // I M P O R T:  F U N C T I O N S
 import CommentModel from "../models/commentModel.js";
+
+// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
+const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
 
 // Get all comments
 const getComments = async (req, res, next) => {
@@ -17,9 +21,22 @@ const getComments = async (req, res, next) => {
 // Add new Comments
 const addComment = async (req, res, next) => {
   try {
-    const userId = req.cookies;
-    console.log(userId);
-    const newComment = await CommentModel.create(req.body);
+    // TAKE USERID
+    const token = req.cookies.loginCookie;
+    const tokenDecoded = jwt.verify(token, JWT_KEY);
+    const userId = tokenDecoded.userId;
+
+    // TAKE COFFESHOPID
+    const coffeeShopId = req.body.shopid;
+
+    // COMMENT
+    const comment = req.body.comment;
+
+    const newComment = await CommentModel.create({
+      userId: userId,
+      coffeeShopId: coffeeShopId,
+      comment: comment,
+    });
     res.status(201).send(newComment);
   } catch (error) {
     next(error);
