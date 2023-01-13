@@ -1,14 +1,15 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv"; dotenv.config();
+import * as dotenv from "dotenv";
+dotenv.config();
 // import bcrypt from 'bcrypt';
 // import jwt from "jsonwebtoken";
 
 // I M P O R T:  F U N C T I O N S
 import CoffeeshopModel from "../models/coffeeshopsModel.js";
 
-// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y 
-const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue"
-const SENDGRID_KEY = process.env.SENDGRID_API_KEY 
+// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
+const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
+const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
 
 //========================
 
@@ -21,7 +22,6 @@ const getCoffeeshop = async (req, res, next) => {
     next(error);
   }
 };
-
 
 // Add new Coffeeshops
 const addCoffeeshop = async (req, res, next) => {
@@ -46,7 +46,9 @@ const deleteCoffeeshop = async (req, res, next) => {
 const updateCoffeeshop = async (req, res, next) => {
   try {
     res.json(
-      await CoffeeshopModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      await CoffeeshopModel.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      })
     );
   } catch (error) {
     next(error);

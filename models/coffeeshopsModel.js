@@ -2,32 +2,32 @@
 import mongoose, { Schema, model } from "mongoose";
 
 // S C H E M A  -  D A T A   S T R U C T U R E
-const coffeeShopSchema = new Schema({
-  name: { type: String, required: true },
-  img_url: String,
-  location: { 
-    address: {
-      street: {type: String, required: true},
-      number: {type: String, required: true},
-      zip: {type: String, required: true},
-      city: {type: String, required: true}
+const coffeeShopSchema = new Schema(
+  {
+    name: { type: String, required: true },
+    img_url: String,
+    location: {
+      address: {
+        street: { type: String, required: true },
+        number: { type: String, required: true },
+        zip: { type: String, required: true },
+        city: { type: String, required: true },
+        longitude: { type: String, required: true },
+        latitude: { type: String, required: true },
+      },
+    },
+    services: {
+      has_sockets: Boolean,
+      has_wifi: Boolean,
+      has_toilet: Boolean,
+      can_take_calls: Boolean,
+    },
+    seats: Number,
+    espresso_price: String,
+    rating: [{ type: mongoose.Types.ObjectId, ref: "Rating" }],
+    comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
   },
-    longitude: {type: String, required: true},
-    latitude: {type: String, required: true},
-  }, 
-  services: {
-    has_sockets: Boolean,
-    has_wifi: Boolean,
-    has_toilet: Boolean,
-    can_take_calls: Boolean
-  },
-  seats: Number,
-  espresso_price: String,
-  rating: [{type: mongoose.Types.ObjectId, ref: "Rating"}],
-  comments: [{type: mongoose.Types.ObjectId, ref: "Comment"}],
-}
-,
-{strictQuery: true}
+  { strictQuery: true }
 );
 
 // M O D E L - T E M P L A T E   F O R   D B   E N T R I E S

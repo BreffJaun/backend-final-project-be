@@ -4,8 +4,8 @@ import { Schema, model } from "mongoose";
 // S C H E M A  -  D A T A   S T R U C T U R E
 const ratingSchema = new Schema(
   {
-    userId: String,
-    coffeeShopId: String,
+    userId: { type: String, required: true },
+    coffeeShopId: { type: String, required: true },
     rating: { type: Number, required: true },
   },
   { timestamps: true }
