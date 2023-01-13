@@ -39,7 +39,7 @@ app.use(express.static('public'));
 app.use(cookieParser());
 app.use(cors(
     {
-      origin: 'http://localhost:3000', // hier Render Adresse eintragen
+      origin: 'http://localhost:5173', // hier Render Adresse eintragen
       credentials: true
     }
   )
