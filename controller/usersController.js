@@ -71,8 +71,8 @@ export async function verifyEmail (req, res, next) {
     const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
     const id = decodedVerifyToken._id;
     const user = await UserModel.findByIdAndUpdate(id, {isVerified: true})
-    res.json({message: 'E-Mail is now SUCCESSFULLY verified!'});
-    // res.redirect(`${HOST}/login`)
+    // res.json({message: 'E-Mail is now SUCCESSFULLY verified!'});
+    res.redirect(`${HOST}/login`)
     // if we have a frontend, we can direct the successful verification to the login page
   }catch (err) {
     next(err);
