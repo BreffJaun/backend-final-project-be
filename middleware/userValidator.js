@@ -6,8 +6,8 @@ export const userValidator = [
   body("userName")
     .notEmpty()
     .withMessage("Username has to bet set!")
-    .isAlpha("de-DE", {ignore: " -"})
-    .withMessage("Username contains not allowed signs!")
+    // .isAlpha("de-DE", {ignore: " -"})
+    // .withMessage("Username contains not allowed signs!")
     .trim() // takes out whitespaces at the beginning and the end of an string
     .escape(), // changes special chars into normal chars
   body("email")
