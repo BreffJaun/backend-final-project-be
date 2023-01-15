@@ -12,7 +12,8 @@ import { json } from "express";
 // I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
-const HOST = process.env.HOST;
+const BE_HOST = process.env.BE_HOST;
+const FE_HOST = process.env.FE_HOST;
 
 //========================
 
@@ -39,11 +40,11 @@ export async function usersPostUser(req, res, next) {
     // AVATAR IMPLEMENT BEGIN //
     if (req.file) {
       await UserModel.findByIdAndUpdate(createdUser._id, {
-        avatar: `${HOST}/${req.file.path}`,
+        avatar: `${BE_HOST}/${req.file.path}`,
       });
     } else {
       await UserModel.findByIdAndUpdate(createdUser._id, {
-        avatar: `${HOST}/assets/images/coffypaste_icon_avatar.png`,
+        avatar: `${BE_HOST}/assets/images/coffypaste_icon_avatar.png`,
       });
     }
     // AVATAR IMPLEMENT END //
@@ -59,8 +60,8 @@ export async function usersPostUser(req, res, next) {
       to: newUser.email, // Change to your recipient
       from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: "EMAIL VERIFICATION for the Record-Shop",
-      text: `To verify your email, please click on this link: ${HOST}/users/verify/${verifyToken}`,
-      html: `<p><a href="${HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
+      text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
+      html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
     };
     const response = await sgMail.send(msg);
     // VERIFY EMAIL IMPLEMENT END //
@@ -82,7 +83,8 @@ export async function verifyEmail(req, res, next) {
     const id = decodedVerifyToken._id;
     const user = await UserModel.findByIdAndUpdate(id, { isVerified: true });
     // res.json({message: 'E-Mail is now SUCCESSFULLY verified!'});
-    res.redirect(`${HOST}/users/login`);
+
+    res.redirect(`${FE_HOST}/users/login`);
     // if we have a frontend, we can direct the successful verification to the login page
   } catch (err) {
     next(err);
@@ -111,8 +113,8 @@ export async function forgotPassword(req, res, next) {
       to: userFromDb.email, // Change to your recipient
       from: `${"braun_jeff@web.de"}`, // Change to your verified sender
       subject: "SET A NEW PASSWORD for ......",
-      text: `To change your password, please click on this link: ${HOST}/users/setnewpassword/${verifyToken}`,
-      html: `<p><a href="${HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
+      text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
+      html: `<p><a href="${BE_HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
     };
     const response = await sgMail.send(msg);
     // VERIFY EMAIL IMPLEMENT END //
