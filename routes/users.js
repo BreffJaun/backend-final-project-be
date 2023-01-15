@@ -51,7 +51,7 @@ router
 router
   .route('/:id')
     .get(auth, usersGetSpecific)
-    .put(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
+    .patch(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
     .delete(auth, usersDeleteSpecific);
 
 router

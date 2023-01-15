@@ -1,6 +1,5 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "dotenv"; dotenv.config();
 import mongoose from "mongoose";
 import express from "express";
 import cors from "cors";
