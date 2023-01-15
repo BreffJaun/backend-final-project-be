@@ -12,7 +12,7 @@ import { json } from "express";
 // I M P O R T  &  D E C L A R E   K E Y S
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
-const SENDGRID_EMAIL = process.env.SENDGRID_EMAIL
+const SENDGRID_EMAIL = process.env.SENDGRID_EMAIL;
 const BE_HOST = process.env.BE_HOST;
 const FE_HOST = process.env.FE_HOST;
 
@@ -59,7 +59,7 @@ export async function usersPostUser(req, res, next) {
     );
     const msg = {
       to: newUser.email, // Change to your recipient
-      from: SENDGRID_EMAIL, // Change to your verified sender
+      from: "braun_jeff@web.de", // Change to your verified sender
       subject: "EMAIL VERIFICATION for your 'Coffy Paste' Account",
       text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
@@ -85,7 +85,7 @@ export async function verifyEmail(req, res, next) {
     const user = await UserModel.findByIdAndUpdate(id, { isVerified: true });
     // res.json({message: 'E-Mail is now SUCCESSFULLY verified!'});
 
-    res.redirect(`${FE_HOST}/users/login`);
+    res.redirect(`${FE_HOST}/login`);
     // if we have a frontend, we can direct the successful verification to the login page
   } catch (err) {
     next(err);
@@ -112,7 +112,7 @@ export async function forgotPassword(req, res, next) {
     );
     const msg = {
       to: userFromDb.email, // Change to your recipient
-      from: SENDGRID_EMAIL, // Change to your verified sender
+      from: "fbwwd22d02@gmail.com", // Change to your verified sender
       subject: "SET A NEW PASSWORD for your 'Coffy Paste' Account",
       text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
