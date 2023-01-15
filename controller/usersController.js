@@ -9,9 +9,10 @@ import UserModel from "../models/userModel.js";
 import { JSONCookie } from "cookie-parser";
 import { json } from "express";
 
-// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
+// I M P O R T  &  D E C L A R E   K E Y S
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
 const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
+const SENDGRID_EMAIL = process.env.SENDGRID_EMAIL
 const BE_HOST = process.env.BE_HOST;
 const FE_HOST = process.env.FE_HOST;
 
@@ -58,8 +59,8 @@ export async function usersPostUser(req, res, next) {
     );
     const msg = {
       to: newUser.email, // Change to your recipient
-      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
-      subject: "EMAIL VERIFICATION for the Record-Shop",
+      from: SENDGRID_EMAIL, // Change to your verified sender
+      subject: "EMAIL VERIFICATION for your 'Coffy Paste' Account",
       text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
     };
@@ -111,8 +112,8 @@ export async function forgotPassword(req, res, next) {
     );
     const msg = {
       to: userFromDb.email, // Change to your recipient
-      from: `${"braun_jeff@web.de"}`, // Change to your verified sender
-      subject: "SET A NEW PASSWORD for ......",
+      from: SENDGRID_EMAIL, // Change to your verified sender
+      subject: "SET A NEW PASSWORD for your 'Coffy Paste' Account",
       text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
     };
@@ -332,3 +333,5 @@ export async function usersChecklogin(req, res, next) {
     // res.status(401).end()
   }
 }
+
+
