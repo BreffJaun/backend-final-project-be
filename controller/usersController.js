@@ -1,6 +1,5 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "dotenv"; dotenv.config();
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sgMail from "@sendgrid/mail";
@@ -193,23 +192,13 @@ export async function usersPatchSpecific(req, res, next) {
     // CHECK & UPDATE EVERY GIVEN PARAMETER START //
     // CHECK FIRSTNAME START //
     if (userData.firstName) {
-      const firstName = userData.firstName;
+      const userName = userData.userName;
       const user = await UserModel.findByIdAndUpdate(id, {
-        firstName: firstName,
+        userName: userName,
         new: true,
       });
     }
     // CHECK FIRSTNAME END //
-
-    // CHECK LASTNAME START //
-    if (userData.lastName) {
-      const lastName = userData.lastName;
-      const user = await UserModel.findByIdAndUpdate(id, {
-        firstName: firstName,
-        new: true,
-      });
-    }
-    // CHECK LASTNAME END //
 
     // CHECK EMAIL START //
     if (userData.email) {
@@ -217,7 +206,7 @@ export async function usersPatchSpecific(req, res, next) {
         { email: userData.email },
         { id: { $not: req.params.id } }
       );
-      console.log(userFromDb);
+      // console.log(userFromDb);
       if (userFromDb.length > 0) {
         const err = new Error("There is already a user with this email!");
         err.statusCode = 401;
@@ -332,7 +321,10 @@ export async function usersChecklogin(req, res, next) {
     const token = req.cookies.loginCookie;
     const tokenDecoded = jwt.verify(token, JWT_KEY);
     console.log("Token in Cookie is valid. User is loggedin");
-    res.status(200).json({ message: "SUCCESFULLY LOGGED IN" }).end();
+    res.status(200).json({ 
+      message: "SUCCESFULLY LOGGED IN",
+      userId: tokenDecoded.userId    
+    }).end();
   } catch (err) {
     next(err);
     // res.status(401).end()

@@ -19,7 +19,7 @@ export const userValidator = [
     .notEmpty()
     .withMessage("Your Favourite Coffee has to bet set!")
     .isAlpha("de-DE", {ignore: " -"})
-    .withMessage("Username contains not allowed signs!")
+    .withMessage("Fav Coff contains not allowed signs!")
     .trim() // takes out whitespaces at the beginning and the end of an string
     .escape(),   
   body("password")
