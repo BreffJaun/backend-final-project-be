@@ -59,7 +59,7 @@ export async function usersPostUser(req, res, next) {
     );
     const msg = {
       to: newUser.email, // Change to your recipient
-      from: "braun_jeff@web.de", // Change to your verified sender
+      from: SENDGRID_EMAIL, // Change to your verified sender
       subject: "EMAIL VERIFICATION for your 'Coffy Paste' Account",
       text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
@@ -112,7 +112,7 @@ export async function forgotPassword(req, res, next) {
     );
     const msg = {
       to: userFromDb.email, // Change to your recipient
-      from: "fbwwd22d02@gmail.com", // Change to your verified sender
+      from: SENDGRID_EMAIL, // Change to your verified sender
       subject: "SET A NEW PASSWORD for your 'Coffy Paste' Account",
       text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
       html: `<p><a href="${BE_HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
