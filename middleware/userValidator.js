@@ -15,6 +15,13 @@ export const userValidator = [
     .withMessage("Email has to be set!")
     .trim()
     .isEmail(),
+  body("myFavCoff")
+    .notEmpty()
+    .withMessage("Your Favourite Coffee has to bet set!")
+    .isAlpha("de-DE", {ignore: " -"})
+    .withMessage("Username contains not allowed signs!")
+    .trim() // takes out whitespaces at the beginning and the end of an string
+    .escape(),   
   body("password")
     .notEmpty()
     .withMessage("Password has to bet set!")

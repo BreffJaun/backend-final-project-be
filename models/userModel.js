@@ -8,6 +8,7 @@ const userSchema = new Schema(
     city: { type: String, required: true },
     email: { type: String, required: false, unique: true },
     // with unique we check and go sure, that this email doesn`t already exists in the database
+    myFavCoff: {type: String},
     password: { type: String, required: true },
     avatar: { type: String },
     isAdmin: { type: Boolean, default: false },
