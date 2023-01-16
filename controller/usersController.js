@@ -136,7 +136,7 @@ export async function setNewPassword(req, res, next) {
     // FIRST REQUEST (EMAIL) //
     const verifyToken = req.params.token;
     const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
-    // FIRST REQUEST (uEMAIL) PAUSE... //
+    // FIRST REQUEST (EMAIL) PAUSE... //
 
     // SECOND REQUEST (WITH SUBMIT / FORM) BEGIN //
     const id = decodedVerifyToken._id;
@@ -178,14 +178,7 @@ export async function usersGetSpecific(req, res, next) {
   }
 }
 
-// PATCH (Update) spexport async function deleteFriend(req,res,next){
-//   try {
-//     const {friend, user}=req.body
-//     await UserModel.findByIdAndUpdate()
-//   } catch (error) {
-
-//   }
-// }ecific User
+// PATCH (Update) specific User
 export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //

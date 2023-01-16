@@ -46,17 +46,17 @@ router.route("/login").post(usersPostLogin);
 
 router.route("/checklogin").get(usersChecklogin);
 
-router
-  .route("/:id")
-  .get(auth, usersGetSpecific)
-  .patch(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
-  .delete(auth, usersDeleteSpecific);
-
 router.route("/friends").patch(auth, addFriend);
 // .delete(auth, deleteFriend)
 
 router.route("/forgotpassword").post(forgotPassword);
 
 router.route("/setnewpassword/:token").post(setNewPassword);
+
+router
+  .route("/:id")
+  .get(auth, usersGetSpecific)
+  .patch(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
+  .delete(auth, usersDeleteSpecific);
 
 export default router;

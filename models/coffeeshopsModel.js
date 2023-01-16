@@ -12,8 +12,8 @@ const coffeeShopSchema = new Schema(
         number: { type: String, required: true },
         zip: { type: String, required: true },
         city: { type: String, required: true },
-        longitude: { type: String, required: true },
         latitude: { type: String, required: true },
+        longitude: { type: String, required: true },
       },
     },
     services: {
