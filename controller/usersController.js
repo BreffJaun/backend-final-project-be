@@ -1,5 +1,6 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv"; dotenv.config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sgMail from "@sendgrid/mail";
@@ -24,6 +25,7 @@ export async function usersGetAll(req, res, next) {
     res.json(await UserModel.find().populate("friends"));
   } catch (err) {
     next(err);
+    u;
   }
 }
 
@@ -134,7 +136,7 @@ export async function setNewPassword(req, res, next) {
     // FIRST REQUEST (EMAIL) //
     const verifyToken = req.params.token;
     const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
-    // FIRST REQUEST (EMAIL) PAUSE... //
+    // FIRST REQUEST (uEMAIL) PAUSE... //
 
     // SECOND REQUEST (WITH SUBMIT / FORM) BEGIN //
     const id = decodedVerifyToken._id;
@@ -176,7 +178,14 @@ export async function usersGetSpecific(req, res, next) {
   }
 }
 
-// PATCH (Update) specific User
+// PATCH (Update) spexport async function deleteFriend(req,res,next){
+//   try {
+//     const {friend, user}=req.body
+//     await UserModel.findByIdAndUpdate()
+//   } catch (error) {
+
+//   }
+// }ecific User
 export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //
@@ -324,14 +333,40 @@ export async function usersChecklogin(req, res, next) {
     const token = req.cookies.loginCookie;
     const tokenDecoded = jwt.verify(token, JWT_KEY);
     console.log("Token in Cookie is valid. User is loggedin");
-    res.status(200).json({ 
-      message: "SUCCESFULLY LOGGED IN",
-      userId: tokenDecoded.userId    
-    }).end();
+    res
+      .status(200)
+      .json({
+        message: "SUCCESFULLY LOGGED IN",
+        userId: tokenDecoded.userId,
+      })
+      .end();
   } catch (err) {
     next(err);
     // res.status(401).end()
   }
 }
 
+// ADD new friend
 
+export async function addFriend(req, res, next) {
+  try {
+    const { friend, user } = req.body;
+    await UserModel.findByIdAndUpdate(
+      user,
+      { $push: { friends: friend } },
+      { new: true }
+    );
+    res.status(201).json({ message: "new friend added" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+// export async function deleteFriend(req,res,next){
+//   try {
+//     const {friend, user}=req.body
+//     await UserModel.findByIdAndUpdate()
+//   } catch (error) {
+
+//   }
+// }
