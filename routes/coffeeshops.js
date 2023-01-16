@@ -33,7 +33,7 @@ router
     .delete(auth, admin, deleteCoffeeshop);
 
 router
-  .route("/favshop/:id")
+  .route("/favshop/:shopid")
     .post(addFavShop)
     .delete(deleteFavShop)
 

@@ -60,8 +60,8 @@ const updateCoffeeshop = async (req, res, next) => {
 // ADD TOP SHOPS
 const addFavShop = async (req, res, next) => {
   try {
-    const userId = req.params.id
-    const shopId = req.body.shopId
+    const userId = req.body.userId
+    const shopId = req.params.shopid
     const currShop = await UserModel.findByIdAndUpdate(userId, {
       $push: {topShops: shopId}
     });
@@ -74,8 +74,8 @@ const addFavShop = async (req, res, next) => {
 // DELETE FAVSHOP
 const deleteFavShop = async (req, res, next) => {
   try {
-    const userId = req.params.id
-    const shopId = req.body.shopId
+    const userId = req.body.userId
+    const shopId = req.params.shopid
     const currShop = await UserModel.findByIdAndUpdate(userId, {
       $pull: {topShops: shopId}
     });
