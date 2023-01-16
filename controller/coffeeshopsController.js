@@ -1,6 +1,8 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "dotenv"; dotenv.config();
+import CoffeeShopModel from "../models/coffeeshopsModel.js";
+import UserModel from "../models/userModel.js";
+
 // import bcrypt from 'bcrypt';
 // import jwt from "jsonwebtoken";
 
@@ -14,10 +16,22 @@ const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
 //========================
 
 // Get all Coffeeshops
-const getCoffeeshop = async (req, res, next) => {
+const getCoffeeshops = async (req, res, next) => {
   try {
     const coffeeshops = await CoffeeshopModel.find();
-    res.json(coffeeshops);
+    res.status(201).json(coffeeshops);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Get ONE Coffeeshop
+const getCoffeeshop = async (req, res, next) => {
+  try {
+    const shopId = req.params.id
+    const coffeeshop = await CoffeeshopModel.findOne({id: shopId});
+    console.log(shopId);
+    res.status(201).json(coffeeshop);
   } catch (error) {
     next(error);
   }
@@ -55,4 +69,32 @@ const updateCoffeeshop = async (req, res, next) => {
   }
 };
 
-export { addCoffeeshop, getCoffeeshop, deleteCoffeeshop, updateCoffeeshop };
+// ADD TOP SHOPS
+const addFavShop = async (req, res, next) => {
+  try {
+    const userId = req.body.userId
+    const shopId = req.params.shopid
+    const currShop = await UserModel.findByIdAndUpdate(userId, {
+      $push: {topShops: shopId}
+    });
+    res.status(201).json({message: 'Shop ADDED to favourites'})
+  } catch (error) {
+    next(error)
+  }
+}
+
+// DELETE FAVSHOP
+const deleteFavShop = async (req, res, next) => {
+  try {
+    const userId = req.body.userId
+    const shopId = req.params.shopid
+    const currShop = await UserModel.findByIdAndUpdate(userId, {
+      $pull: {topShops: shopId}
+    });
+    res.status(201).json({message: 'Shop DELETED from favourites'})
+  } catch (error) {
+    next(error)
+  }
+}
+
+export { addCoffeeshop, getCoffeeshops, deleteCoffeeshop, updateCoffeeshop, addFavShop, deleteFavShop, getCoffeeshop };

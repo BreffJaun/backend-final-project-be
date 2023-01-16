@@ -9,7 +9,10 @@ import {
   addCoffeeshop,
   deleteCoffeeshop,
   updateCoffeeshop,
+  getCoffeeshops,
   getCoffeeshop,
+  addFavShop,
+  deleteFavShop
 } from "../controller/coffeeshopsController.js";
 
 import { auth } from '../middleware/auth.js';
@@ -22,11 +25,18 @@ const router = express.Router();
 
 router
   .route("/")
-    .get(getCoffeeshop)
+    .get(getCoffeeshops)
     .post(auth, admin, addCoffeeshop);
 
+    
+router
+  .route("/favshop/:shopid")
+    .post(addFavShop)
+    .delete(deleteFavShop)
+    
 router
   .route("/:id")
+    .get( getCoffeeshop)
     .patch(auth, admin, updateCoffeeshop)
     .delete(auth, admin, deleteCoffeeshop);
 
