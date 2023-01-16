@@ -22,6 +22,7 @@ import {
   forgotPassword,
   setNewPassword,
   addFriend,
+  deleteFriend,
 } from "../controller/usersController.js";
 
 import { auth } from "../middleware/auth.js";
