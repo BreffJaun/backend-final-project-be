@@ -15,6 +15,7 @@ const userSchema = new Schema(
     isVerified: { type: Boolean, default: false },
     isVerifiedTCP: { type: Boolean, default: false }, // TCP = To Change Password;
     friends: [{ type: mongoose.Types.ObjectId, ref: "User", unique: true }],
+    comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
     topShops: [
       { type: mongoose.Types.ObjectId, ref: "Coffeeshop", unique: true },
     ],
