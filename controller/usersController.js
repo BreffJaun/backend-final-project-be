@@ -370,11 +370,15 @@ export async function addFriend(req, res, next) {
   }
 }
 
-// export async function deleteFriend(req,res,next){
-//   try {
-//     const {friend, user}=req.body
-//     await UserModel.findByIdAndUpdate()
-//   } catch (error) {
+export async function deleteFriend(req, res, next) {
+  try {
+    const friendId = req.body.friend;
+    const userId = req.body.user;
+    await UserModel.updateOne({ _id: userId }, { $pull: {} });
+    db.products.update({ _id: 1 }, { $pull: { friends: { _id: friendId } } });
 
-//   }
-// }
+    await UserModel.findByIdAndUpdate();
+  } catch (error) {
+    next(error);
+  }
+}
