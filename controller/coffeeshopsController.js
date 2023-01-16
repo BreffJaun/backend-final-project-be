@@ -19,7 +19,7 @@ const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
 const getCoffeeshops = async (req, res, next) => {
   try {
     const coffeeshops = await CoffeeshopModel.find();
-    res.json(coffeeshops);
+    res.status(201).json(coffeeshops);
   } catch (error) {
     next(error);
   }
@@ -30,7 +30,7 @@ const getCoffeeshop = async (req, res, next) => {
   try {
     const shopId = req.params.id
     const coffeeshop = await CoffeeshopModel.findById(shopId);
-    res.json(coffeeshop);
+    res.status(201).json(coffeeshop);
   } catch (error) {
     next(error);
   }
