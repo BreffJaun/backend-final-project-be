@@ -379,7 +379,7 @@ export async function deleteFriend(req, res, next) {
       { $pull: { friends: friendId } }
     );
 
-    await UserModel.findByIdAndUpdate();
+    res.status(200).json({ message: "friend deleted" });
   } catch (error) {
     next(error);
   }
