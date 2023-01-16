@@ -28,15 +28,15 @@ router
     .get(getCoffeeshops)
     .post(auth, admin, addCoffeeshop);
 
+    
 router
-  .route("/:id")
-    .get(auth, getCoffeeshop)
-    .patch(auth, admin, updateCoffeeshop)
-    .delete(auth, admin, deleteCoffeeshop);
-
-router
-  .route("/favshop/:shopid")
-    .post(addFavShop)
-    .delete(deleteFavShop)
-
+.route("/favshop/:shopid")
+.post(addFavShop)
+.delete(deleteFavShop)
+    
+    router
+      .route("/:id")
+        .get(auth, getCoffeeshop)
+        .patch(auth, admin, updateCoffeeshop)
+        .delete(auth, admin, deleteCoffeeshop);
 export default router;

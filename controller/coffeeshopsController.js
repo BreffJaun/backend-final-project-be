@@ -25,7 +25,7 @@ const getCoffeeshops = async (req, res, next) => {
   }
 };
 
-// Get ONE Coffeeshops
+// Get ONE Coffeeshop
 const getCoffeeshop = async (req, res, next) => {
   try {
     const shopId = req.params.id
@@ -35,8 +35,6 @@ const getCoffeeshop = async (req, res, next) => {
     next(error);
   }
 };
-
-
 
 // Add new Coffeeshops
 const addCoffeeshop = async (req, res, next) => {
