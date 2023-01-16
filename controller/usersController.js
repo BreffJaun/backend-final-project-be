@@ -374,8 +374,10 @@ export async function deleteFriend(req, res, next) {
   try {
     const friendId = req.body.friend;
     const userId = req.body.user;
-    await UserModel.updateOne({ _id: userId }, { $pull: {} });
-    db.products.update({ _id: 1 }, { $pull: { friends: { _id: friendId } } });
+    await UserModel.updateOne(
+      { _id: userId },
+      { $pull: { friends: { _id: friendId } } }
+    );
 
     await UserModel.findByIdAndUpdate();
   } catch (error) {
