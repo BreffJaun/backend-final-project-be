@@ -172,7 +172,9 @@ export async function usersGetSpecific(req, res, next) {
       err.statusCode = 422;
       throw err;
     }
-    res.status(200).json(await UserModel.findById(req.params.id));
+    res
+      .status(200)
+      .json(await UserModel.findById(req.params.id).populate("friends"));
   } catch (err) {
     next(err);
   }
