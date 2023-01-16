@@ -9,6 +9,7 @@ import {
   addCoffeeshop,
   deleteCoffeeshop,
   updateCoffeeshop,
+  getCoffeeshops,
   getCoffeeshop,
   addFavShop,
   deleteFavShop
@@ -24,11 +25,12 @@ const router = express.Router();
 
 router
   .route("/")
-    .get(getCoffeeshop)
+    .get(getCoffeeshops)
     .post(auth, admin, addCoffeeshop);
 
 router
   .route("/:id")
+    .get(auth, getCoffeeshop)
     .patch(auth, admin, updateCoffeeshop)
     .delete(auth, admin, deleteCoffeeshop);
 

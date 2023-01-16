@@ -16,7 +16,7 @@ const SENDGRID_KEY = process.env.SENDGRID_API_KEY;
 //========================
 
 // Get all Coffeeshops
-const getCoffeeshop = async (req, res, next) => {
+const getCoffeeshops = async (req, res, next) => {
   try {
     const coffeeshops = await CoffeeshopModel.find();
     res.json(coffeeshops);
@@ -24,6 +24,19 @@ const getCoffeeshop = async (req, res, next) => {
     next(error);
   }
 };
+
+// Get ONE Coffeeshops
+const getCoffeeshop = async (req, res, next) => {
+  try {
+    const shopId = req.params.id
+    const coffeeshop = await CoffeeshopModel.findById(shopId);
+    res.json(coffeeshop);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 // Add new Coffeeshops
 const addCoffeeshop = async (req, res, next) => {
@@ -85,4 +98,4 @@ const deleteFavShop = async (req, res, next) => {
   }
 }
 
-export { addCoffeeshop, getCoffeeshop, deleteCoffeeshop, updateCoffeeshop, addFavShop, deleteFavShop };
+export { addCoffeeshop, getCoffeeshops, deleteCoffeeshop, updateCoffeeshop, addFavShop, deleteFavShop, getCoffeeshop };
