@@ -178,6 +178,7 @@ export async function usersGetSpecific(req, res, next) {
         await UserModel.findById(req.params.id).populate([
           "friends",
           "comments",
+          "topShops",
         ])
       );
   } catch (err) {
