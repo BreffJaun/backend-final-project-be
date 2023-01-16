@@ -46,8 +46,7 @@ router.route("/login").post(usersPostLogin);
 
 router.route("/checklogin").get(usersChecklogin);
 
-router.route("/friends").patch(auth, addFriend);
-.delete(auth, deleteFriend)
+router.route("/friends").patch(auth, addFriend).delete(auth, deleteFriend);
 
 router.route("/forgotpassword").post(forgotPassword);
 
