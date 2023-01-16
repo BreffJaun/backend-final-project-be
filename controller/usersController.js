@@ -345,13 +345,26 @@ export async function usersChecklogin(req, res, next) {
 
 export async function addFriend(req, res, next) {
   try {
-    const { friend, user } = req.body;
-    await UserModel.findByIdAndUpdate(
-      user,
-      { $push: { friends: friend } },
-      { new: true }
-    );
-    res.status(201).json({ message: "new friend added" });
+    const friendId = req.body.friend;
+    const userId = req.body.user;
+    if (friendId !== userId) {
+      const userData = await UserModel.findById(userId).populate("friends");
+      const found =
+        userData &&
+        userData.friends.find(
+          (friend) => friend._id.toString() === friendId.toString()
+        );
+
+      if (!found) {
+        await UserModel.findByIdAndUpdate(
+          userId,
+          { $push: { friends: friendId } },
+          { new: true }
+        );
+        res.status(201).json({ message: "new friend added" });
+      }
+    }
+    res.status(401).json({ message: "friend already exists" });
   } catch (error) {
     next(error);
   }
