@@ -36,8 +36,8 @@ router
     
 router
   .route("/:id")
-    .get(auth, getCoffeeshop)
+    .get( getCoffeeshop)
     .patch(auth, admin, updateCoffeeshop)
     .delete(auth, admin, deleteCoffeeshop);
-    
+
 export default router;
