@@ -10,6 +10,8 @@ import {
   deleteCoffeeshop,
   updateCoffeeshop,
   getCoffeeshop,
+  addFavShop,
+  deleteFavShop
 } from "../controller/coffeeshopsController.js";
 
 import { auth } from '../middleware/auth.js';
@@ -29,5 +31,10 @@ router
   .route("/:id")
     .patch(auth, admin, updateCoffeeshop)
     .delete(auth, admin, deleteCoffeeshop);
+
+router
+  .route("/favshop/:id")
+    .post(addFavShop)
+    .delete(deleteFavShop)
 
 export default router;

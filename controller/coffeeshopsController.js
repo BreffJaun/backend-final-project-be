@@ -1,6 +1,8 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv";
-dotenv.config();
+import * as dotenv from "dotenv"; dotenv.config();
+import CoffeeShopModel from "../models/coffeeshopsModel.js";
+import UserModel from "../models/userModel.js";
+
 // import bcrypt from 'bcrypt';
 // import jwt from "jsonwebtoken";
 
@@ -55,4 +57,32 @@ const updateCoffeeshop = async (req, res, next) => {
   }
 };
 
-export { addCoffeeshop, getCoffeeshop, deleteCoffeeshop, updateCoffeeshop };
+// ADD TOP SHOPS
+const addFavShop = async (req, res, next) => {
+  try {
+    const userId = req.params.id
+    const shopId = req.body.shopId
+    const currShop = await UserModel.findByIdAndUpdate(userId, {
+      $push: {topShops: shopId}
+    });
+    res.status(201).json({message: 'Shop ADDED to favourites'})
+  } catch (error) {
+    next(error)
+  }
+}
+
+// DELETE FAVSHOP
+const deleteFavShop = async (req, res, next) => {
+  try {
+    const userId = req.params.id
+    const shopId = req.body.shopId
+    const currShop = await UserModel.findByIdAndUpdate(userId, {
+      $pull: {topShops: shopId}
+    });
+    res.status(201).json({message: 'Shop DELETED from favourites'})
+  } catch (error) {
+    next(error)
+  }
+}
+
+export { addCoffeeshop, getCoffeeshop, deleteCoffeeshop, updateCoffeeshop, addFavShop, deleteFavShop };

@@ -347,7 +347,6 @@ export async function usersChecklogin(req, res, next) {
 }
 
 // ADD new friend
-
 export async function addFriend(req, res, next) {
   try {
     const friendId = req.body.friend;
