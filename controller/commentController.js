@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 
 // I M P O R T:  F U N C T I O N S
 import CommentModel from "../models/commentModel.js";
+import UserModel from "../models/userModel.js";
+import CoffeeShopModel from "../models/coffeeshopsModel.js";
 
 // I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
 const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
@@ -37,6 +39,14 @@ const addComment = async (req, res, next) => {
       coffeeShopId: coffeeShopId,
       comment: comment,
     });
+    const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
+      { coffeeShopId },
+      { $push: { comments: newComment } }
+    );
+    const pushInUser = await UserModel.findByIdAndUpdate(
+      { userId },
+      { $push: { comments: newComment } }
+    );
     res.status(201).send(newComment);
   } catch (error) {
     next(error);
@@ -55,11 +65,22 @@ const deleteComment = async (req, res, next) => {
 // Update Comments
 const updateComment = async (req, res, next) => {
   try {
-    res.json(
-      await CommentModel.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedComment = await CommentModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
         new: true,
-      })
+      }
     );
+    const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
+      { coffeeShopId },
+      { $push: { comments: updatedComment } }
+    );
+    const pushInUser = await UserModel.findByIdAndUpdate(
+      { userId },
+      { $push: { comments: updatedComment } }
+    );
+    res.json(updateComment);
   } catch (error) {
     next(error);
   }

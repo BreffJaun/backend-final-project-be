@@ -5,7 +5,7 @@ import express from "express";
 import {
   addComment,
   getComments,
-  deleteComment,
+  // deleteComment,
   updateComment,
 } from "../controller/commentController.js";
 
@@ -16,6 +16,9 @@ const router = express.Router();
 
 router.route("/").get(getComments).post(addComment);
 
-router.route("/:id").delete(auth, deleteComment).patch(auth, updateComment);
+router
+  .route("/:id")
+  // .delete(auth, deleteComment)
+  .patch(auth, updateComment);
 
 export default router;

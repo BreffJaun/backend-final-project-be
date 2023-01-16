@@ -5,9 +5,11 @@ import jwt from "jsonwebtoken";
 
 // I M P O R T:  F U N C T I O N S
 import RatingModel from "../models/ratingModel.js";
+import CoffeeShopModel from "../models/coffeeshopsModel.js";
+import UserModel from "../models/userModel.js";
 
-// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y 
-const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue"
+// I M P O R T  &  D E C L A R E   B C R Y P T   K E Y
+const JWT_KEY = process.env.SECRET_JWT_KEY || "DefaultValue";
 
 // Get all ratings
 const getRatings = async (req, res, next) => {
@@ -27,16 +29,24 @@ const addRating = async (req, res, next) => {
     const userId = tokenDecoded.userId;
 
     // TAKE COFFESHOPID
-    const coffeeShopId = req.body.shopid;
+    const coffeeShopId = req.body.shopId;
 
     // RATING
-    const rating = req.body.rating;  
+    const rating = req.body.rating;
 
     const newRating = await RatingModel.create({
       userId: userId,
       coffeeShopId: coffeeShopId,
-      rating: rating
+      rating: rating,
     });
+    const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
+      { coffeeShopId },
+      { $push: { ratings: newRating } }
+    );
+    const pushInUser = await UserModel.findByIdAndUpdate(
+      { userId },
+      { $push: { ratings: newRating } }
+    );
     res.status(201).send(newRating);
   } catch (error) {
     next(error);
@@ -55,11 +65,22 @@ const deleteRating = async (req, res, next) => {
 // Update Ratings
 const updateRating = async (req, res, next) => {
   try {
-    res.json(
-      await RatingModel.findByIdAndUpdate(req.params.id, req.body, {
+    const updatedRating = await RatingModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
         new: true,
-      })
+      }
     );
+    const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
+      { coffeeShopId },
+      { $push: { ratings: updatedRating } }
+    );
+    const pushInUser = await UserModel.findByIdAndUpdate(
+      { userId },
+      { $push: { comments: updatedRating } }
+    );
+    res.json(updatedRating);
   } catch (error) {
     next(error);
   }

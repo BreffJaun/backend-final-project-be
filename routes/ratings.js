@@ -5,7 +5,7 @@ import express from "express";
 import {
   addRating,
   getRatings,
-  deleteRating,
+  // deleteRating,
   updateRating,
 } from "../controller/ratingController.js";
 
@@ -16,7 +16,10 @@ const router = express.Router();
 
 router.route("/").get(getRatings).post(auth, addRating);
 
-router.route("/:id").delete(auth, deleteRating).patch(auth, updateRating); 
+router
+  .route("/:id")
+  // .delete(auth, deleteRating)
+  .patch(auth, updateRating);
 // RATING ID
 
 export default router;
