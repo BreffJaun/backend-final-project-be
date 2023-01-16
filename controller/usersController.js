@@ -22,7 +22,7 @@ const FE_HOST = process.env.FE_HOST;
 // GET List of all users
 export async function usersGetAll(req, res, next) {
   try {
-    res.json(await UserModel.find().populate("friends"));
+    res.json(await UserModel.find().populate("friends").populate("Comment"));
   } catch (err) {
     next(err);
     u;
@@ -174,7 +174,11 @@ export async function usersGetSpecific(req, res, next) {
     }
     res
       .status(200)
-      .json(await UserModel.findById(req.params.id).populate("friends"));
+      .json(
+        await UserModel.findById(req.params.id)
+          .populate("friends")
+          .populate("Comment")
+      );
   } catch (err) {
     next(err);
   }
