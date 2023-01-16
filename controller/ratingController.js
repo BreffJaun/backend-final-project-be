@@ -78,7 +78,7 @@ const updateRating = async (req, res, next) => {
     );
     const pushInUser = await UserModel.findByIdAndUpdate(
       { userId },
-      { $push: { comments: updatedRating } }
+      { $push: { ratings: updatedRating } }
     );
     res.json(updatedRating);
   } catch (error) {
