@@ -191,7 +191,9 @@ export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //
     const userData = req.body;
+    console.log(userData);
     const id = req.params.id;
+    console.log(id);
     // DEFINE NEEDED VARIABLES //
 
     // CHECK IF AUTHORIZED //
