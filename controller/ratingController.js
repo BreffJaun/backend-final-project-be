@@ -32,12 +32,12 @@ const addRating = async (req, res, next) => {
     const coffeeShopId = req.body.shopId;
 
     // RATING
-    const rating = req.body.rating;
+    const ratings = req.body.rating;
 
     const newRating = await RatingModel.create({
       userId: userId,
       coffeeShopId: coffeeShopId,
-      rating: rating,
+      ratings: rating,
     });
     const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
       { coffeeShopId },
