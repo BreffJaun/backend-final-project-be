@@ -59,7 +59,7 @@ router.route("/setnewpassword/:token").post(setNewPassword);
 router
   .route("/:id")
   .get(auth, usersGetSpecific)
-  .patch(userUpdateValidator, validateRequest, usersPatchSpecific)
+  .patch(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
   .delete(auth, usersDeleteSpecific);
 
 export default router;
