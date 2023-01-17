@@ -17,6 +17,7 @@ import {
   usersPatchSpecific,
   usersDeleteSpecific,
   usersPostLogin,
+  usersGetLogout,
   usersChecklogin,
   verifyEmail,
   forgotPassword,
@@ -44,6 +45,8 @@ router
 router.route("/verify/:token").get(verifyEmail);
 
 router.route("/login").post(usersPostLogin);
+
+router.route("/logout").get(usersGetLogout);
 
 router.route("/checklogin").get(usersChecklogin);
 
