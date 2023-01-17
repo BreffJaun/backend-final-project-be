@@ -214,25 +214,35 @@ export async function usersPatchSpecific(req, res, next) {
     }
     // CHECK FIRSTNAME END //
 
-    // CHECK EMAIL START //
-    if (userData.email) {
-      const userFromDb = await UserModel.find(
-        { email: userData.email },
-        { id: { $not: req.params.id } }
-      );
-      // console.log(userFromDb);
-      if (userFromDb.length > 0) {
-        const err = new Error("There is already a user with this email!");
-        err.statusCode = 401;
-        throw err;
-      } else {
-        const newEmail = userData.email;
-        const updatedUser = await UserModel.findByIdAndUpdate(id, {
-          email: newEmail,
-          new: true,
-        });
-      }
+    // CHECK CITY START //
+    if (userData.city) {
+      const city = userData.city;
+      const user = await UserModel.findByIdAndUpdate(id, {
+        city: city,
+        new: true,
+      });
     }
+    // CHECK CITY END //
+
+    // CHECK EMAIL START //
+    // if (userData.email) {
+    //   const userFromDb = await UserModel.find(
+    //     { email: userData.email },
+    //     { id: { $not: req.params.id } }
+    //   );
+    //   // console.log(userFromDb);
+    //   if (userFromDb.length > 0) {
+    //     const err = new Error("There is already a user with this email!");
+    //     err.statusCode = 401;
+    //     throw err;
+    //   } else {
+    //     const newEmail = userData.email;
+    //     const updatedUser = await UserModel.findByIdAndUpdate(id, {
+    //       email: newEmail,
+    //       new: true,
+    //     });
+    //   }
+    // }
     // CHECK EMAIL END //
 
     // CHECK PASSWORD START //

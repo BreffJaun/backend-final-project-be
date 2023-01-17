@@ -73,10 +73,16 @@ const addFavShop = async (req, res, next) => {
   try {
     const userId = req.body.userId
     const shopId = req.params.shopid
-    const currShop = await UserModel.findByIdAndUpdate(userId, {
-      $push: {topShops: shopId}
-    });
-    res.status(201).json({message: 'Shop ADDED to favourites'})
+    const user = await UserModel.findById(userId);
+    const shopInUser = user.topShops.find(shop => shop._id.toString() === shopId.toString());
+    if (!shopInUser) {
+      const currShop = await UserModel.findByIdAndUpdate(userId, {
+        $push: {topShops: shopId}
+      });
+      res.status(201).json({message: 'Shop ADDED to favourites'})
+    } else {
+      res.status(400).json({message: 'Is already a TOP SHOP!'})
+    }
   } catch (error) {
     next(error)
   }
