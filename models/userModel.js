@@ -14,13 +14,13 @@ const userSchema = new Schema(
     isAdmin: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: false },
     isVerifiedTCP: { type: Boolean, default: false }, // TCP = To Change Password;
-    friends: [{ type: mongoose.Types.ObjectId, ref: "User", unique: true }],
-    comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
+    friends: [{ type: Schema.Types.ObjectId, ref: "User", unique: true }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     topShops: [
-      { type: mongoose.Types.ObjectId, ref: "Coffeeshop", unique: true },
+      { type: Schema.Types.ObjectId, ref: "Coffeeshop", unique: true },
     ],
     visitedShops: [
-      { type: mongoose.Types.ObjectId, ref: "Coffeeshop", unique: true },
+      { type: Schema.Types.ObjectId, ref: "Coffeeshop", unique: true },
     ],
   },
   { strictQuery: true }

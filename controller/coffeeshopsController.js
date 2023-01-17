@@ -29,9 +29,10 @@ const getCoffeeshops = async (req, res, next) => {
 const getCoffeeshop = async (req, res, next) => {
   try {
     const shopId = req.params.id
-    const coffeeshop = await CoffeeshopModel.findOne({id: shopId});
+    const coffeeshop = await CoffeeshopModel.find({name:shopId});
     console.log(shopId);
-    res.status(201).json(coffeeshop);
+    console.log(coffeeshop);
+    res.status(200).json(coffeeshop);
   } catch (error) {
     next(error);
   }

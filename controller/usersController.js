@@ -316,6 +316,8 @@ export async function usersPostLogin(req, res, next) {
       .cookie("loginCookie", token, {
         maxAge: oneHour,
         httpOnly: true,
+        sameSite: 'none',
+        secure: true,
       })
       .json({
         auth: "loggedin",

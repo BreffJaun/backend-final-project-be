@@ -24,8 +24,8 @@ const coffeeShopSchema = new Schema(
     },
     seats: Number,
     espresso_price: String,
-    rating: [{ type: mongoose.Types.ObjectId, ref: "Rating" }],
-    comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
+    rating: [{ type: Schema.Types.ObjectId, ref: "Rating" }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { strictQuery: true }
 );
