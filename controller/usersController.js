@@ -317,7 +317,7 @@ export async function usersPostLogin(req, res, next) {
       .cookie("loginCookie", token, {
         maxAge: oneHour,
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: "none",
         secure: true,
       })
       .json({
@@ -336,7 +336,7 @@ export async function usersPostLogin(req, res, next) {
 export async function usersGetLogout(req, res, next) {
   try {
     res.clearCookie("loginCookie");
-    res.status(200).json({message: 'Logout SUCCESSFULLY!'})
+    res.status(200).json({ message: "Logout SUCCESSFULLY!" });
   } catch (err) {
     next(err);
   }
