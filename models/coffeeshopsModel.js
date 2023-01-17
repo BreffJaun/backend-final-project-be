@@ -23,7 +23,7 @@ const coffeeShopSchema = new Schema({
   },
   seats: Number,
   espresso_price: String,
-  ratings: [{ type: Schema.Types.ObjectId, ref: "Rating" }],
+  rating: [{ type: Schema.Types.ObjectId, ref: "Rating" }],
   comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
 });
 
