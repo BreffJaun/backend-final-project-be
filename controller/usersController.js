@@ -25,7 +25,6 @@ export async function usersGetAll(req, res, next) {
     res.json(await UserModel.find().populate(["friends", "comments"]));
   } catch (err) {
     next(err);
-    u;
   }
 }
 
@@ -318,6 +317,8 @@ export async function usersPostLogin(req, res, next) {
       .cookie("loginCookie", token, {
         maxAge: oneHour,
         httpOnly: true,
+        sameSite: 'none',
+        secure: true,
       })
       .json({
         auth: "loggedin",
@@ -326,6 +327,16 @@ export async function usersPostLogin(req, res, next) {
         message: "Login SUCCESSFUL!",
       });
     // INSERT COOKIE CODE BEGIN //
+  } catch (err) {
+    next(err);
+  }
+}
+
+// GET Logout a User
+export async function usersGetLogout(req, res, next) {
+  try {
+    res.clearCookie("loginCookie");
+    res.status(200).json({message: 'Logout SUCCESSFULLY!'})
   } catch (err) {
     next(err);
   }

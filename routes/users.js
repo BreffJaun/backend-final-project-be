@@ -17,6 +17,7 @@ import {
   usersPatchSpecific,
   usersDeleteSpecific,
   usersPostLogin,
+  usersGetLogout,
   usersChecklogin,
   verifyEmail,
   forgotPassword,
@@ -45,6 +46,8 @@ router.route("/verify/:token").get(verifyEmail);
 
 router.route("/login").post(usersPostLogin);
 
+router.route("/logout").get(usersGetLogout);
+
 router.route("/checklogin").get(usersChecklogin);
 
 router.route("/friends").patch(auth, addFriend).delete(auth, deleteFriend);
@@ -56,7 +59,7 @@ router.route("/setnewpassword/:token").post(setNewPassword);
 router
   .route("/:id")
   .get(auth, usersGetSpecific)
-  .patch(userUpdateValidator, validateRequest, usersPatchSpecific)
+  .patch(userUpdateValidator, validateRequest, auth, usersPatchSpecific)
   .delete(auth, usersDeleteSpecific);
 
 export default router;
