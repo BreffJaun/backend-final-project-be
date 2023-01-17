@@ -190,12 +190,13 @@ export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //
     const userData = req.body;
-    console.log(userData);
+    // console.log(userData);
     const id = req.params.id;
     console.log(id);
     // DEFINE NEEDED VARIABLES //
 
     // CHECK IF AUTHORIZED //
+    console.log(req.token.userId);
     if (id !== req.token.userId) {
       const err = new Error("Not Authorized!");
       err.statusCode = 401;
@@ -326,7 +327,7 @@ export async function usersPostLogin(req, res, next) {
       .cookie("loginCookie", token, {
         maxAge: oneHour,
         httpOnly: true,
-        sameSite: 'none',
+        sameSite: "none",
         secure: true,
       })
       .json({
@@ -345,7 +346,7 @@ export async function usersPostLogin(req, res, next) {
 export async function usersGetLogout(req, res, next) {
   try {
     res.clearCookie("loginCookie");
-    res.status(200).json({message: 'Logout SUCCESSFULLY!'})
+    res.status(200).json({ message: "Logout SUCCESSFULLY!" });
   } catch (err) {
     next(err);
   }

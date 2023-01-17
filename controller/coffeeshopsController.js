@@ -1,5 +1,6 @@
 // I M P O R T:  E X T E R N A L  D E P E N D E N C I E S
-import * as dotenv from "dotenv"; dotenv.config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import CoffeeShopModel from "../models/coffeeshopsModel.js";
 import UserModel from "../models/userModel.js";
 
@@ -28,8 +29,11 @@ const getCoffeeshops = async (req, res, next) => {
 // Get ONE Coffeeshop
 const getCoffeeshop = async (req, res, next) => {
   try {
-    const shopId = req.params.id
-    const coffeeshop = await CoffeeshopModel.findById(shopId);
+    const shopId = req.params.id;
+    const coffeeshop = await CoffeeshopModel.findById(shopId).populate([
+      "comments",
+      "rating",
+    ]);
     res.status(200).json(coffeeshop);
   } catch (error) {
     next(error);
@@ -84,22 +88,30 @@ const addFavShop = async (req, res, next) => {
       res.status(400).json({message: 'Is already a TOP SHOP!'})
     }
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 // DELETE FAVSHOP
 const deleteFavShop = async (req, res, next) => {
   try {
-    const userId = req.body.userId
-    const shopId = req.params.shopid
+    const userId = req.body.userId;
+    const shopId = req.params.shopid;
     const currShop = await UserModel.findByIdAndUpdate(userId, {
-      $pull: {topShops: shopId}
+      $pull: { topShops: shopId },
     });
-    res.status(201).json({message: 'Shop DELETED from favourites'})
+    res.status(201).json({ message: "Shop DELETED from favourites" });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-export { addCoffeeshop, getCoffeeshops, deleteCoffeeshop, updateCoffeeshop, addFavShop, deleteFavShop, getCoffeeshop };
+export {
+  addCoffeeshop,
+  getCoffeeshops,
+  deleteCoffeeshop,
+  updateCoffeeshop,
+  addFavShop,
+  deleteFavShop,
+  getCoffeeshop,
+};
