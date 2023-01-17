@@ -190,12 +190,13 @@ export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //
     const userData = req.body;
-    console.log(userData);
+    // console.log(userData);
     const id = req.params.id;
     console.log(id);
     // DEFINE NEEDED VARIABLES //
 
     // CHECK IF AUTHORIZED //
+    console.log(req.token.userId);
     if (id !== req.token.userId) {
       const err = new Error("Not Authorized!");
       err.statusCode = 401;
