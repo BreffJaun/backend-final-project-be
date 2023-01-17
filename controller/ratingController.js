@@ -32,21 +32,20 @@ const addRating = async (req, res, next) => {
     const coffeeShopId = req.body.shopId;
 
     // RATING
-    const ratings = req.body.rating;
-
+    const rating = req.body.rating;
+    console.log(rating, coffeeShopId, userId);
     const newRating = await RatingModel.create({
       userId: userId,
       coffeeShopId: coffeeShopId,
       ratings: rating,
     });
     const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
-      { coffeeShopId },
-      { $push: { ratings: newRating } }
+      coffeeShopId,
+      { $push: { rating: newRating._id } }
     );
-    const pushInUser = await UserModel.findByIdAndUpdate(
-      { userId },
-      { $push: { ratings: newRating } }
-    );
+    const pushInUser = await UserModel.findByIdAndUpdate(userId, {
+      $push: { rating: newRating._id },
+    });
     res.status(201).send(newRating);
   } catch (error) {
     next(error);
