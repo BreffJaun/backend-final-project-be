@@ -29,23 +29,23 @@ const addComment = async (req, res, next) => {
     const userId = tokenDecoded.userId;
 
     // TAKE COFFESHOPID
-    const coffeeShopId = req.body.shopid;
+    const coffeeShopId = req.body.shopId;
 
     // COMMENT
     const comment = req.body.comment;
-
+    console.log(comment, coffeeShopId, userId);
     const newComment = await CommentModel.create({
       userId: userId,
       coffeeShopId: coffeeShopId,
       comment: comment,
     });
     const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
-      { coffeeShopId },
-      { $push: { comments: newComment } }
+      coffeeShopId ,
+      { $push: { comments: newComment._id } }
     );
     const pushInUser = await UserModel.findByIdAndUpdate(
-      { userId },
-      { $push: { comments: newComment } }
+      userId ,
+      { $push: { comments: newComment._id } }
     );
     res.status(201).send(newComment);
   } catch (error) {

@@ -29,8 +29,8 @@ const getCoffeeshops = async (req, res, next) => {
 const getCoffeeshop = async (req, res, next) => {
   try {
     const shopId = req.params.id
-    const coffeeshop = await CoffeeshopModel.findById(shopId);
-
+    const coffeeshop = await CoffeeshopModel.findById(shopId).populate(["comments", "rating"]);
+    console.log(coffeeshop);
     res.status(200).json(coffeeshop);
   } catch (error) {
     next(error);
