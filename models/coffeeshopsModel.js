@@ -26,8 +26,7 @@ const coffeeShopSchema = new Schema(
     espresso_price: String,
     rating: [{ type: Schema.Types.ObjectId, ref: "Rating" }],
     comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
-  },
-  { strictQuery: true }
+  }
 );
 
 // M O D E L - T E M P L A T E   F O R   D B   E N T R I E S
