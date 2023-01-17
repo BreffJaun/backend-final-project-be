@@ -61,9 +61,23 @@ export async function usersPostUser(req, res, next) {
     const msg = {
       to: newUser.email, // Change to your recipient
       from: SENDGRID_EMAIL, // Change to your verified sender
-      subject: "EMAIL VERIFICATION for your 'Coffy Paste' Account",
+      subject: "VERIFICATION for your 'Coffy Paste' Account",
       text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
-      html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
+      html: `
+      <div>
+      <p>Hi ${newUser.userName}, </p>
+
+      <p>We're happy you signed up for Coffy Paste. To start your tasty journey and exploring
+      your favourite Coffeeshops, please verify your email.</p>
+
+      <p><a href="${BE_HOST}/users/verify/${verifyToken}" 
+      style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
+      Verify now</a></p>
+    
+      <p>Welcome to Coffy Paste!<br>
+      Your Coffy Paste Team </p>
+      
+      <div>`,
     };
     const response = await sgMail.send(msg);
     // VERIFY EMAIL IMPLEMENT END //
