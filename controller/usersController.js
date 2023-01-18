@@ -161,7 +161,7 @@ export async function forgotPassword(req, res, next) {
 }
 
 // GET Verify reset token
-export async function verifyResetToken (req, res, next) {
+export async function verifyResetToken(req, res, next) {
   try {
     const verifyToken = req.params.token;
     const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
@@ -180,7 +180,9 @@ export async function setNewPassword(req, res, next) {
     const email = req.body.email;
     const userFromDb = await UserModel.findOne({ email: email });
     if (!userFromDb.isVerifiedTCP) {
-      res.status(422).json({message: "Account not verified to change password"});    
+      res
+        .status(422)
+        .json({ message: "Account not verified to change password" });
     }
     // CHANGE AND ENCRYPT NEW PASSWORD
     const id = userFromDb._id;
@@ -192,9 +194,9 @@ export async function setNewPassword(req, res, next) {
         isVerifiedTCP: false,
       });
       console.log(updatedUser);
-      res.status(200).json({ message: "Set new Password was SUCCESSFUL!"});
+      res.status(200).json({ message: "Set new Password was SUCCESSFUL!" });
     } else {
-      res.status(422).json({message: "Set new Password was FAILED!"});
+      res.status(422).json({ message: "Set new Password was FAILED!" });
     }
   } catch (err) {
     next(err);
@@ -258,6 +260,13 @@ export async function usersPatchSpecific(req, res, next) {
       const city = userData.city;
       const user = await UserModel.findByIdAndUpdate(id, {
         city: city,
+        new: true,
+      });
+    }
+    if (userData.myFavCoff) {
+      const coffee = userData.myFavCoff;
+      const user = await UserModel.findByIdAndUpdate(id, {
+        myFavCoff: coffee,
         new: true,
       });
     }
