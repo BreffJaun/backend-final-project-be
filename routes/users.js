@@ -24,6 +24,7 @@ import {
   setNewPassword,
   addFriend,
   deleteFriend,
+  verifyResetToken
 } from "../controller/usersController.js";
 
 import { auth } from "../middleware/auth.js";
@@ -54,7 +55,9 @@ router.route("/friends").patch(auth, addFriend).delete(auth, deleteFriend);
 
 router.route("/forgotpassword").post(forgotPassword);
 
-router.route("/setnewpassword/:token").post(setNewPassword);
+router.route("/reset/:token").get(verifyResetToken);
+
+router.route("/setnewpassword").post(setNewPassword);
 
 router
   .route("/:id")

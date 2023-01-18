@@ -61,8 +61,8 @@ export async function usersPostUser(req, res, next) {
     const msg = {
       to: newUser.email, // Change to your recipient
       from: SENDGRID_EMAIL, // Change to your verified sender
-      subject: "VERIFICATION for your 'Coffy Paste' Account",
-      text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
+      subject: "VERIFICATION of your 'Coffy Paste' Account",
+      // text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
       html: `
       <div>
       <p>Hi ${newUser.userName}, </p>
@@ -129,8 +129,25 @@ export async function forgotPassword(req, res, next) {
       to: userFromDb.email, // Change to your recipient
       from: SENDGRID_EMAIL, // Change to your verified sender
       subject: "SET A NEW PASSWORD for your 'Coffy Paste' Account",
-      text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
-      html: `<p><a href="${BE_HOST}/users/setnewpassword/${verifyToken}">Reset your password!</a></p>`,
+      // text: `To change your password, please click on this link: ${BE_HOST}/users/setnewpassword/${verifyToken}`,
+      html: `
+      <div>
+      <p>Hi ${userFromDb.userName}, </p>
+
+      <p>a request has been received to change the password 
+      for your Coffy Paste account</p>
+
+      <p><a href="${BE_HOST}/users/reset/${verifyToken}" 
+      style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
+      Reset password</a></p>
+    
+      <p>If you did not initiate this request, please contact 
+      us immediately at ${SENDGRID_EMAIL}</p>
+
+      <p>Thank you,<br>
+      your Coffy Paste Team </p>
+      
+      <div>`,
     };
     const response = await sgMail.send(msg);
     // VERIFY EMAIL IMPLEMENT END //
@@ -143,16 +160,30 @@ export async function forgotPassword(req, res, next) {
   }
 }
 
+// GET Verify reset token
+export async function verifyResetToken (req, res, next) {
+  try {
+    const verifyToken = req.params.token;
+    const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
+    const id = decodedVerifyToken._id;
+    const user = await UserModel.findByIdAndUpdate(id, { isVerifiedTCP: true });
+    res.redirect(`${FE_HOST}/setnewpassword`);
+  } catch (err) {
+    next(err);
+  }
+}
+
 // POST Change (forgotten) password after email request
 export async function setNewPassword(req, res, next) {
   try {
-    // FIRST REQUEST (EMAIL) //
-    const verifyToken = req.params.token;
-    const decodedVerifyToken = jwt.verify(verifyToken, JWT_KEY);
-    // FIRST REQUEST (EMAIL) PAUSE... //
-
-    // SECOND REQUEST (WITH SUBMIT / FORM) BEGIN //
-    const id = decodedVerifyToken._id;
+    // CHECK IF ACCOUNT IS VERIFIED WITH EMAIL
+    const email = req.body.email;
+    const userFromDb = await UserModel.findOne({ email: email });
+    if (!userFromDb.isVerifiedTCP) {
+      res.status(422).json({message: "Account not verified to change password"});    
+    }
+    // CHANGE AND ENCRYPT NEW PASSWORD
+    const id = userFromDb._id;
     const newPassword = req.body.password;
     if (newPassword) {
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -161,17 +192,10 @@ export async function setNewPassword(req, res, next) {
         isVerifiedTCP: false,
       });
       console.log(updatedUser);
-      res.json({ message: "Set new Password was SUCCESSFUL!" });
-      // SECOND REQUEST (WITH SUBMIT / FORM) END //
-
-      // FIRST REQUEST (EMAIL) CONTINUE... //
+      res.status(200).json({ message: "Set new Password was SUCCESSFUL!"});
     } else {
-      const user = await UserModel.findByIdAndUpdate(id, {
-        isVerifiedTCP: true,
-      });
-      res.json({ message: "email for reset your password is verified" });
+      res.status(422).json({message: "Set new Password was FAILED!"});
     }
-    // FIRST REQUEST (EMAIL) END... //
   } catch (err) {
     next(err);
   }
