@@ -43,11 +43,11 @@ const app = express();
 // SERVER MIDDLEWARE
 app.use(express.json());
 app.use(express.static("public"));
-app.use(express.static("dist"))
+
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173", // hier Render Adresse eintragen
+    origin: "https://coffy-paste.vercel.app/", // hier Render Adresse eintragen
     credentials: true,
   })
 );
