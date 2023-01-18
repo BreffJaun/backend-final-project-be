@@ -21,14 +21,15 @@ export const userValidator = [
     .isAlpha("de-DE", {ignore: " -"})
     .withMessage("Fav Coff contains not allowed signs!")
     .trim() // takes out whitespaces at the beginning and the end of an string
-    .escape(),   
-  body("password")
-    .notEmpty()
-    .withMessage("Password has to bet set!")
-    .trim()
-    .isStrongPassword()
-    .withMessage("Password isn't safe enough!")
-    .isLength({min:8})
+    .escape()
+    // ,   
+  // body("password")
+  //   .notEmpty()
+  //   .withMessage("Password has to bet set!")
+  //   .trim()
+  //   .isStrongPassword()
+  //   .withMessage("Password isn't safe enough!")
+  //   .isLength({min:8})
 ]
 
 export const userUpdateValidator = [
