@@ -43,6 +43,7 @@ const app = express();
 // SERVER MIDDLEWARE
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.static("dist"))
 app.use(cookieParser());
 app.use(
   cors({
