@@ -190,7 +190,7 @@ export async function usersPatchSpecific(req, res, next) {
   try {
     // DEFINE NEEDED VARIABLES //
     const userData = req.body;
-    // console.log(userData);
+    console.log(userData);
     const id = req.params.id;
     console.log(id);
     // DEFINE NEEDED VARIABLES //
@@ -206,7 +206,7 @@ export async function usersPatchSpecific(req, res, next) {
 
     // CHECK & UPDATE EVERY GIVEN PARAMETER START //
     // CHECK FIRSTNAME START //
-    if (userData.firstName) {
+    if (userData.userName) {
       const userName = userData.userName;
       const user = await UserModel.findByIdAndUpdate(id, {
         userName: userName,
@@ -219,9 +219,9 @@ export async function usersPatchSpecific(req, res, next) {
     if (userData.email) {
       const userFromDb = await UserModel.find(
         { email: userData.email },
-        { id: { $not: req.params.id } }
+        { _id: { $not: req.params.id } }
       );
-      // console.log(userFromDb);
+      console.log(userFromDb.length);
       if (userFromDb.length > 0) {
         const err = new Error("There is already a user with this email!");
         err.statusCode = 401;
@@ -254,8 +254,8 @@ export async function usersPatchSpecific(req, res, next) {
     }
     // CHECK AVATAR END //
     // CHECK & UPDATE EVERY GIVEN PARAMETER END //
-
-    res.json(await UserModel.findById(id));
+    const user = await UserModel.findOne({ _id: id });
+    res.json(user);
   } catch (err) {
     next(err);
   }
