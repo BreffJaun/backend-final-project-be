@@ -61,9 +61,23 @@ export async function usersPostUser(req, res, next) {
     const msg = {
       to: newUser.email, // Change to your recipient
       from: SENDGRID_EMAIL, // Change to your verified sender
-      subject: "EMAIL VERIFICATION for your 'Coffy Paste' Account",
+      subject: "VERIFICATION for your 'Coffy Paste' Account",
       text: `To verify your email, please click on this link: ${BE_HOST}/users/verify/${verifyToken}`,
-      html: `<p><a href="${BE_HOST}/users/verify/${verifyToken}">Verify your email!</a></p>`,
+      html: `
+      <div>
+      <p>Hi ${newUser.userName}, </p>
+
+      <p>We're happy you signed up for Coffy Paste. To start your tasty journey and exploring
+      your favourite Coffeeshops, please verify your email.</p>
+
+      <p><a href="${BE_HOST}/users/verify/${verifyToken}" 
+      style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
+      Verify now</a></p>
+    
+      <p>Welcome to Coffy Paste!<br>
+      Your Coffy Paste Team </p>
+      
+      <div>`,
     };
     const response = await sgMail.send(msg);
     // VERIFY EMAIL IMPLEMENT END //
@@ -215,25 +229,35 @@ export async function usersPatchSpecific(req, res, next) {
     }
     // CHECK FIRSTNAME END //
 
-    // CHECK EMAIL START //
-    if (userData.email) {
-      const userFromDb = await UserModel.find(
-        { email: userData.email },
-        { _id: { $not: req.params.id } }
-      );
-      console.log(userFromDb.length);
-      if (userFromDb.length > 0) {
-        const err = new Error("There is already a user with this email!");
-        err.statusCode = 401;
-        throw err;
-      } else {
-        const newEmail = userData.email;
-        const updatedUser = await UserModel.findByIdAndUpdate(id, {
-          email: newEmail,
-          new: true,
-        });
-      }
+    // CHECK CITY START //
+    if (userData.city) {
+      const city = userData.city;
+      const user = await UserModel.findByIdAndUpdate(id, {
+        city: city,
+        new: true,
+      });
     }
+    // CHECK CITY END //
+
+    // CHECK EMAIL START //
+    // if (userData.email) {
+    //   const userFromDb = await UserModel.find(
+    //     { email: userData.email },
+    //     { id: { $not: req.params.id } }
+    //   );
+    //   // console.log(userFromDb);
+    //   if (userFromDb.length > 0) {
+    //     const err = new Error("There is already a user with this email!");
+    //     err.statusCode = 401;
+    //     throw err;
+    //   } else {
+    //     const newEmail = userData.email;
+    //     const updatedUser = await UserModel.findByIdAndUpdate(id, {
+    //       email: newEmail,
+    //       new: true,
+    //     });
+    //   }
+    // }
     // CHECK EMAIL END //
 
     // CHECK PASSWORD START //

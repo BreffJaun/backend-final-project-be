@@ -37,7 +37,7 @@ const addRating = async (req, res, next) => {
     const newRating = await RatingModel.create({
       userId: userId,
       coffeeShopId: coffeeShopId,
-      ratings: rating,
+      rating: rating,
     });
     const pushInCoffeshop = await CoffeeShopModel.findByIdAndUpdate(
       coffeeShopId,
