@@ -392,7 +392,7 @@ export async function usersPostLogin(req, res, next) {
 // GET Logout a User
 export async function usersGetLogout(req, res, next) {
   try {
-    res.clearCookie("loginCookie");
+    res.clearCookie("loginCookie", {sameSite:"none", secure:true});
     res.status(200).json({ message: "Logout SUCCESSFULLY!" });
   } catch (err) {
     next(err);
