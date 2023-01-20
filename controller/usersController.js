@@ -307,7 +307,7 @@ export async function usersPatchSpecific(req, res, next) {
     // CHECK AVATAR BEGIN //
     if (req.file) {
       await UserModel.findByIdAndUpdate(id, {
-        avatar: `http://localhost:2404/${req.file.path}`,
+        avatar: `${BE_HOST}/${req.file.path}`,
       });
     }
     // CHECK AVATAR END //

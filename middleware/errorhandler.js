@@ -1,6 +1,7 @@
 // E R R O R   H A N D L E R
 const errorHandler = (err, req, res, next) => {
   // CONSOLE OUTPUT
+  console.log('err', err);
   console.log('err.name: ',  err.name);
   console.log('err.message: ', err.message);
   console.log('err.statusCode: ', err.statusCode);
