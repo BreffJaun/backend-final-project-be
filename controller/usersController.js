@@ -73,6 +73,7 @@ export async function usersPostUser(req, res, next) {
       <p><a href="${BE_HOST}/users/verify/${verifyToken}" 
       style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
       Verify now</a></p>
+      <p>Falls der Button nicht funktioniert füge bitte diese Adresse in den Browser ein: "${BE_HOST}/users/reset/${verifyToken}"</p>
     
       <p>Welcome to Coffy Paste!<br>
       Your Coffy Paste Team </p>
@@ -139,7 +140,7 @@ export async function forgotPassword(req, res, next) {
 
       <p><a href="${BE_HOST}/users/reset/${verifyToken}" 
       style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
-      Reset password</a></p>
+      Reset password</a></p>      
     
       <p>If you did not initiate this request, please contact 
       us immediately at ${SENDGRID_EMAIL}</p>
