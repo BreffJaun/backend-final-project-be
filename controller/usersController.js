@@ -70,7 +70,7 @@ export async function usersPostUser(req, res, next) {
       <p>We're happy you signed up for Coffy Paste. To start your tasty journey and exploring
       your favourite Coffeeshops, please verify your email.</p>
 
-      <p><a href="${BE_HOST}/users/verify/${verifyToken}" 
+      <p><a href="https://coffy-paste.onrender.com/users/verify/${verifyToken}" 
       style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
       Verify now</a></p>
       <p>Falls der Button nicht funktioniert füge bitte diese Adresse in den Browser ein: https://coffy-paste.onrender.com/users/verify/${verifyToken}</p>
