@@ -70,10 +70,9 @@ export async function usersPostUser(req, res, next) {
       <p>We're happy you signed up for Coffy Paste. To start your tasty journey and exploring
       your favourite Coffeeshops, please verify your email.</p>
 
-      <p><a href="${BE_HOST}/users/verify/${verifyToken}" 
+      <p><a href="https://coffy-paste.onrender.com/users/verify/${verifyToken}" 
       style="background-color: orange; border-radius: 7px; width: 50px; height: 20px; text-decoration: none;">
-      Verify now</a></p>
-      <p>Falls der Button nicht funktioniert füge bitte diese Adresse in den Browser ein: "${BE_HOST}/users/reset/${verifyToken}"</p>
+      Verify now</a></p>      
     
       <p>Welcome to Coffy Paste!<br>
       Your Coffy Paste Team </p>
@@ -101,7 +100,7 @@ export async function verifyEmail(req, res, next) {
     const user = await UserModel.findByIdAndUpdate(id, { isVerified: true });
     // res.json({message: 'E-Mail is now SUCCESSFULLY verified!'});
 
-    res.redirect(`${FE_HOST}/login`);
+    res.redirect(FE_HOST);
     // if we have a frontend, we can direct the successful verification to the login page
   } catch (err) {
     next(err);
