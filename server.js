@@ -47,7 +47,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://coffy-paste.vercel.app", // hier Render Adresse eintragen
+    origin: ["https://coffy-paste.vercel.app", "http://localhost:5173"], // hier Render Adresse eintragen
     credentials: true,
   })
 );

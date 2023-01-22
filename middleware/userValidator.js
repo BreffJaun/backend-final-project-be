@@ -22,7 +22,7 @@ export const userValidator = [
   //   .withMessage("Fav Coff contains not allowed signs!")
   //   .trim() // takes out whitespaces at the beginning and the end of an string
   //   .escape()
-    // ,   
+  // ,   
   // body("password")
   //   .notEmpty()
   //   .withMessage("Password has to bet set!")
