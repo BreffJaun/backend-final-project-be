@@ -327,6 +327,7 @@ export async function usersDeleteSpecific(req, res, next) {
       err.statusCode = 401;
       throw err;
     }
+    com;
     res.status(200).json(await UserModel.findByIdAndDelete(req.params.id));
   } catch (err) {
     next(err);
@@ -393,7 +394,7 @@ export async function usersPostLogin(req, res, next) {
 // GET Logout a User
 export async function usersGetLogout(req, res, next) {
   try {
-    res.clearCookie("loginCookie", {sameSite:"none", secure:true});
+    res.clearCookie("loginCookie", { sameSite: "none", secure: true });
     res.status(200).json({ message: "Logout SUCCESSFULLY!" });
   } catch (err) {
     next(err);
